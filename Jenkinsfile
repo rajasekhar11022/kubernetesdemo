@@ -20,4 +20,5 @@ pipeline{
 			    sh "kubectl apply -n ${ENVR} -f nginx-ingress.yml"
             }
         }
-	}	
+	}
+}	
