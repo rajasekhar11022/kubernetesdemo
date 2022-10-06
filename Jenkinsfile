@@ -4,7 +4,7 @@ pipeline{
 
     stages{
 	
-	    stage ('Create Namespace') {
+	    stage ('Delete Namespace') {
             steps {
 			    sh "kubectl delete namespace dev"
             }
