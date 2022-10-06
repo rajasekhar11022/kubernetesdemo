@@ -3,6 +3,12 @@ pipeline{
     agent any
 
     stages{
+	
+	    stage ('Create Namespace') {
+            steps {
+			    sh "kubectl delete namespace dev"
+            }
+        }
 
         stage ('Create Namespace') {
             steps {
