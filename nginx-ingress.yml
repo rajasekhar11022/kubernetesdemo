@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: red
+  name: red
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: red
+  template:
+    metadata:
+      labels:
+        app: red
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: red
+  name: red
+spec:
+  ports:
+  - port: 9500
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: red
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: red-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: red.kubeaws.xyz
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: red
+              port:
+                number: 9500
